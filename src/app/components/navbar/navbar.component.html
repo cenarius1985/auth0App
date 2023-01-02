@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../../../assets/img/auth0.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            Aut0App
+          </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" [routerLinkActive]="['active']" [routerLink]="['/home']">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/precios']">Precio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/protegida']">Protegido</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Autentificación
+            </a>
+            <ul class="dropdown-menu text-center" aria-labelledby="navbarScrollingDropdown">
+                <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+                    <button class="btn btn-outline-danger"   (click)="auth.logout({ returnTo: document.location.origin })">
+                      Log out
+                    </button>
+                  </ng-container>
+                  <ng-template #loggedOut>
+                    <button class="btn btn-outline-primary" (click)="auth.loginWithRedirect()">Log in</button>
+                  </ng-template>
+            </ul>
+          </li>
+        </ul>
+
+
+        <div class="container mt-5" *ngIf="auth.user$ | async as user">
+            <div
+              class="row align-items-center profile-header mb-5 text-center text-md-left"
+            >
+              <div class="col-md-2">
+                <img
+                  [src]="user.picture"
+                  class="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+                />
+              </div>
+              <div class="col-md">
+                <h2>{{ user.name }}</h2>
+              </div>
+            </div>
+          
+        </div>
+        
+
+
+
+
+
+
+
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+</nav>
